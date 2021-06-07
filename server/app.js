@@ -11,12 +11,13 @@ const port=5000||process.env.PORT
 const helpers=require('./helpers/mongofunctions')
 const addFriend=helpers.addFriend
 
+const  varx=1323424
 const Schema=mongoose.Schema;
 
 app.use(express.json({limit:"30mb", extended:true}))
 app.use(express.urlencoded({limit:"30mb", extended:true}))
 app.use(cors())
-
+//Hey 
 //Models
 const User=require('./models/user.model')
 const Group=require('./models/group.model')
