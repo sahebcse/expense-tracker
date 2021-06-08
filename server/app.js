@@ -6,7 +6,7 @@ const mongoose=require('mongoose')
 
 //const CONNECTION_URL= 'mongodb+srv://USERNAME:PASSWORD@cluster0.jwg85.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 // const CONNECTION_URL='mongodb://localhost/splitdemo4' 
-const CONNECTION_URL='mongodb+srv://saheb:saheb123@cluster0.c8wtx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority' 
+const CONNECTION_URL= process.env.HOST 
 const port=5000||process.env.PORT
 
 const helpers=require('./helpers/mongofunctions')
