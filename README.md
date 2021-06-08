@@ -3,5 +3,6 @@ An App to keep track of your expenses
 
 documentation below: 
 
-start with npm install 
-then npm start in both client and server folder
+first start with npm install .
+
+then use npm start command in both client and server folder.
