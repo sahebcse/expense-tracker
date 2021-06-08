@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 
-const isAuthentiated = async(req,res,next)=>{
+exports.protect = async(req,res,next)=>{
     let token;
 
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
@@ -14,4 +14,3 @@ const isAuthentiated = async(req,res,next)=>{
     }
 }
 
-module.exports=isAuthenticated

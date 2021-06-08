@@ -7,11 +7,11 @@ const addFriend=helpers.addFriend
 const User=require('../models/user.model')
 const Group=require('../models/group.model')
 const { protect } = require('../middleware/auth')
-const isAuthentiated
+
 //app.use(express.json())
 //app.use(express.urlencoded())
 
-router.post('/user', isAuthentiated, async (req, res)=>
+router.post('/user', async (req, res)=>
 {
     try {
         const user=await User.create({
