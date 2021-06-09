@@ -15,7 +15,7 @@ const Navbar = ()=>{
     return(
         <AppBar display="flex" flexDirection="row" justifyContent="space-between" position="static">
             <div display="flex">
-                <Typography variant="h2">SplitWise Clone</Typography>
+                <Typography variant="h2">ExT</Typography>
             </div>
             {localStorage.getItem('profile') &&<Toolbar display="flex" justifyContent="flex-end">
                  <Button  variant="contained" color="secondary" onClick={logout}>Logout</Button>
