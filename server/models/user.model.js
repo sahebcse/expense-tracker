@@ -1,5 +1,6 @@
 const mongoose=require('mongoose')
 const jwt = require('jsonwebtoken');
+const bcrypt=require('bcrypt');
 const Schema=mongoose.Schema;
 
 const balanceSchema=new Schema({
@@ -25,5 +26,16 @@ userSchema.methods.getSignedToken = function() {
     });
 };
 
+
 const User = mongoose.model('User', userSchema)
 module.exports= User;
+
+
+
+userSchema.pre('create',async function(next){
+    if(this.isModified('password')){
+        this.password= await bcrypt.hash(this.password,12);
+        console.log('password hash')
+    }
+    next();
+})
