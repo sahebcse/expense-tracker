@@ -93,7 +93,7 @@ const SignUp = ({setCurrentUser}) => {
                     id="originalFileName"
                     type="file"
                     inputProps={{ accept: 'image/*, .xlsx, .xls, .csv, .pdf, .pptx, .pptm, .ppt' }}
-                    required
+                    
                     label="Document"
                     name="originalFileName"
                     onChange={(event) => handleFileRead(event)}

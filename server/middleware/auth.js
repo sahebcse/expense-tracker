@@ -6,7 +6,7 @@ exports.protect = async(req,res,next)=>{
 
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1];
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        const decoded = await jwt.verify(token, process.env.SECRET_KEY);
 
         const user = User.findById(decoded.id);
         req.user = user;
