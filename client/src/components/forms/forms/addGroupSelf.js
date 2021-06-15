@@ -2,33 +2,35 @@ import React,{ useState} from 'react';
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core';
 import Input from '../auth/input'
 import { useDispatch } from 'react-redux';
-import { addFriend } from '../../../actions/user/user'
+import { addMember } from '../../../actions/user/user'
 import useStyles from './styles'
 
-const AddFriend = ({user}) =>{
-    const [friend,setFriend] = useState('');
+const AddGroup = ({user}) =>{
+    const [id,setId] = useState('');
     const dispatch = useDispatch();
     const classes = useStyles();
 
     const handleSubmit =(e)=>{
         e.preventDefault();
-        console.log('handle submit for addFriend.....')
-        dispatch(addFriend(user.result._id,friend));
+        console.log('handle submit for addGroup.....')
+        const data = {groupId:id, userId:user.result.email, currentUser:user.result._id};
+        dispatch(addMember(data));
     }
 
     const handleChange =(e)=>{
-        setFriend(e.target.value);
+        e.preventDefault();
+        setId(e.target.value);
     }
 
     return (
           <Paper  elevation={3} className={classes.paper}>
-            <Typography component="h1" variant="h5">Add Friend</Typography>
+            <Typography component="h1" variant="h5">Join Group</Typography>
             <form  onSubmit={handleSubmit} className={`${classes.root} ${classes.form}`}>
               <Grid container spacing={2}>
-                <Input name="addFriend" label="Add Friend" handleChange={handleChange} type="email" />
+                <Input name="groupId" label="group id" handleChange={handleChange} />
               </Grid>
               <Button className={classes.buttonSubmit} type="submit" fullWidth variant="contained" color="primary">
-                Add Friend
+                Join
               </Button>
             </form>
           </Paper>
@@ -36,4 +38,4 @@ const AddFriend = ({user}) =>{
     
 }
 
-export default AddFriend
+export default AddGroup

@@ -1,13 +1,13 @@
 const express=require('express')
 const router=express.Router();
 const mongoose=require('mongoose')
-const bcrypt=require('bcrypt')
 
 const helpers=require('../helpers/mongofunctions')
 const addFriend=helpers.addFriend
 const User=require('../models/user.model')
 const Group=require('../models/group.model')
 const { protect } = require('../middleware/auth')
+const bcrypt=require('bcrypt')
 
 //app.use(express.json())
 //app.use(express.urlencoded())
@@ -15,25 +15,26 @@ const { protect } = require('../middleware/auth')
 router.post('/user', async (req, res)=>
 {
     try {
-         const hash=await bcrypt.hash(req.body.password,12);
+        const hash=await bcrypt.hash(req.body.password, 10)
         const user=await User.create({
             firstName: req.body["firstName"],
             lastName: req.body["lastName"],
             email: req.body["email"],
             selectedFile: req.body["selectedFile"],
-            password: hash,
+            password: hash
         })
+        
         
         const token = user.getSignedToken();
         res.status(201).json({result:user, token});
-      
+        
     } catch (error) {
         res.status(404).json({failure:true, message:error.message});
     }
 })
 
 
-router.get('/balances/:id', async (req, res)=>
+router.get('/balances/:id', protect, async (req, res)=>
 {
     try {
         console.log('inside the get balances.......')
@@ -63,8 +64,11 @@ router.post('/user/signIn', async (req, res)=>
         const {email, password} = req.body;
         const user = await User.findOne({email});
         if(!user) return res.status(404).json({message:"user does not exit"});
-        const match=await bcrypt.compare(password,user.password);
-        if(!match) return res.status(404).json({message:"wrong username or password"});
+
+        //if(user.password!==password) return res.status(404).json({message:"wrong username or password"});
+
+        const match=await bcrypt.compare(password, user.password)
+        if (!match) return res.status(404).json({message:"wrong username or password"});
 
         await User.findById(user._id).populate('balances', 'firstName lastName selectedFile').populate('groups', 'name groupType totalExpences groupImage members').exec((err, result)=>
         {
@@ -75,6 +79,7 @@ router.post('/user/signIn', async (req, res)=>
             }
             else
             {
+                
                 const token = result.getSignedToken();
                 return res.status(201).json({result:result, token});
             }
@@ -86,9 +91,14 @@ router.post('/user/signIn', async (req, res)=>
 
 
 
-router.post('/add_expense',protect, async (req, res)=>
+router.post('/add_expense',protect,  async (req, res)=>
 {
     console.log(req.body)
+    if(req.body.groupId){
+        const group = await Group.findById(req.body.groupId);
+        group.totalExpences = parseInt(group.totalExpences)+parseInt(req.body.amount);
+        await group.save();
+    }
     User.findById(req.body.paidby, async (err, result)=>
     {
         for (var i=0;i<result.balances.length;i++)
@@ -139,6 +149,23 @@ router.post('/add_expense',protect, async (req, res)=>
 
         }
     })
+
+    User.findById(req.body.paidby).populate({path: 'balances', populate:{path:'uid'}})
+    .populate('groups', 'name groupType totalExpences groupImage')
+    .populate({path:'groups', populate:{path:'members', select:'firstName lastName email'}})
+    .exec((err, result)=>
+    {
+        if (err)
+        {
+            console.log(err)
+            return res.json(err)
+        }
+        else
+        {
+            return res.status(200).json(result);
+        }
+    })
+
 })
 
 
@@ -209,8 +236,9 @@ router.post('/split_expense',protect, (req, res)=>
 })
 
 
-router.post('/addFriend',protect, async (req, res)=>
+router.post('/addFriend', protect, async (req, res)=>
 {
+    console.log(`inside add friend ${req.body.email}`)
     const { id, email} = req.body;
     const personName2 = await User.findOne({email});
     const person2Id = personName2._id;

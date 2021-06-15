@@ -2,10 +2,11 @@ import React,{ useState} from 'react';
 import {BrowserRouter, Switch, Route, useHistory} from 'react-router-dom';
 import User from './components/user/user'
 import Auth from './components/forms/auth/form'
-import { Container, Grid, Typography, AppBar, Grow, Button, Toolbar } from '@material-ui/core';
+import { Container} from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import Navbar from './components/navbar'
 import SingleGroupInfo from './components/groups/group/singleGroupInfo'
+import './index.css'
 
 const App = ()=>{
     const [currentUser, setCurrentUser] = useState(null);

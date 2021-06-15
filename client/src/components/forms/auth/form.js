@@ -5,6 +5,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { createUser, signIn } from '../../../actions/auth/Auth'
 import Input from './input'
 import { useDispatch} from 'react-redux';
+import useStyles from './styles'
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '', selectedFile:'' };
 
@@ -13,6 +14,7 @@ const SignUp = ({setCurrentUser}) => {
   const [isSignup, setIsSignup] = useState(true);
   const history = useHistory();
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
@@ -72,12 +74,12 @@ const SignUp = ({setCurrentUser}) => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Paper  elevation={3}>
-        <Avatar >
+      <Paper  elevation={3} className={classes.paper}>
+        <Avatar className={classes.avatar} >
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">{ isSignup ? 'Sign up' : 'Sign in' }</Typography>
-        <form  onSubmit={handleSubmit}>
+        <form  className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             { isSignup && (
             <>
@@ -93,7 +95,7 @@ const SignUp = ({setCurrentUser}) => {
                     id="originalFileName"
                     type="file"
                     inputProps={{ accept: 'image/*, .xlsx, .xls, .csv, .pdf, .pptx, .pptm, .ppt' }}
-                    
+                    required
                     label="Document"
                     name="originalFileName"
                     onChange={(event) => handleFileRead(event)}
@@ -103,7 +105,7 @@ const SignUp = ({setCurrentUser}) => {
                 Profile Pic
             </div>}
           </Grid>
-          <Button type="submit" fullWidth variant="contained" color="primary">
+          <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             { isSignup ? 'Sign Up' : 'Sign In' }
           </Button>
 

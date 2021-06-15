@@ -4,21 +4,37 @@ import useStyles from './styles'
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { Link } from 'react-router-dom';
+import InfoIcon from '@material-ui/icons/Info';
+import FileCopyIcon from '@material-ui/icons/FileCopy';
 import SingleGroupInfo from './singleGroupInfo'
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
-const Friend = ({group})=>{
+const Friend = ({group,user}) =>{
     const [showSingle, setShowSingle] = useState(false);
     const classes = useStyles();
-    const groupInfo = { groupName:group.name, groupImage:group.groupImage, groupMember:group.members, groupExpences:group.totalExpences}
+    const groupInfo = { groupName:group.name, groupImage:group.groupImage, groupMember:group.members, groupExpences:group.totalExpences, groupId:group._id}
+
+
+    const [text, setText] = useState(group._id);
+    const [isCopied, setIsCopied] = useState(false);
+
+    const onCopyText = () => {
+        setIsCopied(true);
+        setTimeout(() => {
+        setIsCopied(false);
+        }, 1000);
+    };
     const handleChange = () =>{
         setShowSingle(true);
     }
 
     if(showSingle){
         return (
-            <SingleGroupInfo setShowSingle={setShowSingle} groupInfo={groupInfo}/>
+            <SingleGroupInfo setShowSingle={setShowSingle} groupInfo={groupInfo} user={user}/>
         )
     }
+
+
 
     return(
         
@@ -32,6 +48,11 @@ const Friend = ({group})=>{
                 <Button  style={{ color: 'white' }} size="small" onClick={handleChange}>
                     <MoreHorizIcon fontSize="default" />
                 </Button>
+                <CopyToClipboard text={text} onCopy={onCopyText}>
+                    <Button  style={{ color: 'white' }} size="small">
+                        <FileCopyIcon fontSize="default" />
+                    </Button>
+                </CopyToClipboard>
             </div>
 
             <Typography className={classes.title} gutterBottom variant="h5" component="h2">{group.name}</Typography>
@@ -40,7 +61,7 @@ const Friend = ({group})=>{
             </CardContent>
             <CardActions className={classes.cardActions}>
                 <Button size="small" color="primary" >
-                <DeleteIcon fontSize="small" /> More Info
+                <InfoIcon fontSize="small" /> More Info
                 </Button>
                 <Button size="small" color="secondary" >
                 <DeleteIcon fontSize="small" /> Delete

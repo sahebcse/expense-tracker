@@ -7,8 +7,9 @@ const addFriend=helpers.addFriend
 const appendGroup=helpers.appendGroup
 const User=require('../models/user.model')
 const Group=require('../models/group.model')
+const { protect } = require('../middleware/auth')
 
-router.post('/createGroup', async (req, res)=>
+router.post('/createGroup',protect, async (req, res)=>
 {
     console.log('Aa gaya re main group banane ko.......')
     const group=await Group.create({
@@ -56,8 +57,12 @@ router.post('/createGroup', async (req, res)=>
     
 })
 
-router.post('/add_user_to_group', async (req, res)=>
+router.post('/add_user_to_group',protect,  async (req, res)=>
 {
+    console.log(`inside adding members.....${req.body.userId}`)
+    const email = req.body.userId;
+    const user = await User.findOne({email});
+    const userId = user._id;
     await Group.findById(req.body.groupId, (err, group)=>
     {
         if (err)
@@ -66,7 +71,7 @@ router.post('/add_user_to_group', async (req, res)=>
         }
         else
         {
-            group.members.push(req.body.userId)
+            group.members.push(userId)
             group.save((err, result)=>
             {
                 if (err)
@@ -77,7 +82,7 @@ router.post('/add_user_to_group', async (req, res)=>
         }
     })
 
-    await User.findById(req.body.userId,  (err, user)=>
+    await User.findById(userId,  (err, user)=>
     {
         if (err)
         {
@@ -107,11 +112,27 @@ router.post('/add_user_to_group', async (req, res)=>
             addFriend(groupData.members[k], groupData.members[l])
         }
     }
-    res.json({message: "success"})
+    
+    
+    User.findById(req.body.currentUser).populate({path: 'balances', populate:{path:'uid'}})
+    .populate('groups', 'name groupType totalExpences groupImage')
+    .populate({path:'groups', populate:{path:'members', select:'firstName lastName email'}})
+    .exec((err, result)=>
+    {
+        if (err)
+        {
+            console.log(err)
+            return res.json(err)
+        }
+        else
+        {
+            return res.status(200).json(result);
+        }
+    })
 
 })
 
-router.get('/group/:id', (req, res)=>{
+router.get('/group/:id',protect,  (req, res)=>{
     Group.findById(req.params.id).populate('members', 'first_name email').exec((err, result)=>
     {
         if (err)

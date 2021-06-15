@@ -33,3 +33,21 @@ export const createGroup =(form)=>async (dispatch)=>{
         console.log(error);
     }
 }
+
+export const addFriendExpence = (sendData) => async (dispatch) => {
+    try {
+        const { data } =  await api.addFriendExpence(sendData);
+        dispatch({type:'GET_GROUPS',payload:data.groups});
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const addMember = (sendData) => async (dispatch) => {
+    try {
+        const { data } = await api.addMember(sendData);
+        dispatch({type:'GET_GROUPS', payload: data.groups});
+    } catch (error) {
+        console.log(error);
+    }
+}

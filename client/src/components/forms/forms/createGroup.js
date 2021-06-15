@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { createGroup } from '../../../actions/user/user'
 import Input from '../auth/input'
 import { useDispatch} from 'react-redux';
-
+import useStyles from './styles'
 
 const CreateGroup = ({user}) => {
 
@@ -12,7 +12,7 @@ const CreateGroup = ({user}) => {
   const [form, setForm] = useState(initialState);
   const history = useHistory();
   const dispatch = useDispatch();
-
+  const classes = useStyles();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,15 +41,15 @@ const CreateGroup = ({user}) => {
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   return (
-    <Paper  elevation={3} >
+    <Paper  elevation={3} className={classes.paper}>
     <Typography component="h1" variant="h5">Create Group</Typography>
-    <form  onSubmit={handleSubmit}>
+    <form  onSubmit={handleSubmit} className={`${classes.root} ${classes.form}`}>
         <Grid container spacing={2}>
         <>
             <Input name="name" label="name" handleChange={handleChange} autoFocus />
             <Input name="groupType" label="groupType" handleChange={handleChange} />
         </>
-        <div >
+        <div className={classes.fileInput} >
             <input
                 id="groupImage"
                 type="file"
@@ -64,7 +64,7 @@ const CreateGroup = ({user}) => {
             Group Image
         </div>
         </Grid>
-        <Button type="submit" fullWidth variant="contained" color="primary">
+        <Button className={classes.buttonSubmit} type="submit" fullWidth variant="contained" color="primary">
             Create
         </Button>
 

@@ -7,6 +7,7 @@ import AddFriend from '../forms/forms/addFriend'
 import { getBalances } from '../../actions/user/user'
 import { useDispatch } from 'react-redux';
 import CreateGroup from '../forms/forms/createGroup'
+import AddGroupSelf from '../forms/forms/addGroupSelf'
 
 
 const User = ({currentUser,setCurrentUser})=>{
@@ -21,15 +22,15 @@ const User = ({currentUser,setCurrentUser})=>{
     return(
         <Grow in>
             <Container>
-                <h1>{user.result.firstName}</h1>
                 <Grid container justify="space-between" spacing="0">
                     <Grid item xs={12} sm={8}>
-                        <Friends />
-                        <Groups/>
+                        <Friends user={user} />
+                        <Groups user={user}/>
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <Container align="center">
                             <AddFriend user={user}/>
+                            <AddGroupSelf user={user}/>
                             <CreateGroup user={user}/>
                         </Container>
                     </Grid>

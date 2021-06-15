@@ -1,5 +1,5 @@
 import React,{ useState} from 'react';
-import { Card, CardActions, CardContent, Typography,  CardMedia, Button} from '@material-ui/core'
+import { Card, CardActions, CardContent, Typography,  CardMedia, Button, Grid} from '@material-ui/core'
 import useStyles from './styles'
 import DeleteIcon from '@material-ui/icons/Delete';
 import List from '@material-ui/core/List';
@@ -8,26 +8,38 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import CheckCircleOutlineTwoToneIcon from '@material-ui/icons/CheckCircleOutlineTwoTone';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import AddIcon from '@material-ui/icons/Add';
 import Input from '../../forms/auth/input'
+import { addFriendExpence, addMember } from '../../../actions/user/user'
+import { useDispatch } from 'react-redux'
 
-const SingleGroupInfo = ({setShowSingle, groupInfo})=>{
+const SingleGroupInfo = ({ setShowSingle, groupInfo, user }) =>{
     const classes = useStyles();
+    const dispatch = useDispatch();
 
-    const { groupName, groupImage, groupMember, groupExpences} = groupInfo;
+    const { groupName, groupImage, groupMember, groupExpences, groupId} = groupInfo;
     const [members,setMembers] = useState(groupMember);
-    const [expence, setExpence] = useState(groupExpences);
+    const [expence, setExpence] = useState(0); 
     console.log("members are.....",members)
-    const [newExpence, setNewExpence] = useState(0);
-    const [addMember, setAddMember] = useState('');
+    const [memberEmail, setMemberEmail] = useState('');
 
     const handleChange = (e)=>{
         e.preventDefault();
-        setAddMember(e.target.value);
+        setMemberEmail(e.target.value);
     }
 
-    const handleAddMember = (e)=>{
-        e.preventDefault();
-        setExpence(expence+newExpence)
+    const handleAddMember = ()=>{
+        const data = {groupId:groupId, userId:memberEmail, currentUser:user.result._id};
+        dispatch(addMember(data));
+    }
+
+    const handleExpenceChange = (id)=>{
+        console.log('chalo tum bhi kya yaad rakhogey......')
+        const sendData = { paidby:user.result._id, recipent:id, amount:expence, groupId:groupId};
+        setExpence(0);
+        dispatch(addFriendExpence(sendData));
     }
 
     return(
@@ -45,23 +57,31 @@ const SingleGroupInfo = ({setShowSingle, groupInfo})=>{
                                 <CheckCircleOutlineTwoToneIcon/>
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary={member.firstName} secondary={member.email} />
+                        <Grid>
+                            <ListItemText primary={member.firstName} secondary={member.email} />
+                            {member.email!==user.result.email && <Grid className={classes.cardActions}>
+                                <Input name="addExpence" label="Add Expence" handleChange={(e)=>{setExpence(e.target.value)}} />
+                                <Button size="small" color="primary" onClick={()=>handleExpenceChange(member._id)} >
+                                    <AddIcon fontSize="small" /> Add
+                                </Button>
+                            </Grid>}
+                        </Grid>
+                            
                     </ListItem>)
                     })}
                 </List>
-                <Typography variant="body2" color="textSecondary" component="p">Total Expence : {expence}</Typography>
+                <Typography variant="body2" color="textSecondary" component="p">Total Expence : {groupExpences}</Typography>
                 <Input name="addMember" label="Add Member" handleChange={handleChange} type="email" />
-                <Input name="addExpence" label="Add Expence" handleChange={(e)=>{setNewExpence(e.target.value)}} />
             </CardContent>
             <CardActions className={classes.cardActions}>
                 <Button size="small" color="primary" onClick={handleAddMember} >
-                <DeleteIcon fontSize="small" /> Add
+                <AddCircleOutlineIcon fontSize="small" /> Add
                 </Button>
                 <Button size="small" color="secondary" >
                 <DeleteIcon fontSize="small" /> Delete
                 </Button>
                 <Button size="small" color="primary" onClick={()=>setShowSingle(false)} >
-                <DeleteIcon fontSize="small" /> Back
+                <ArrowBackIosIcon fontSize="small" /> Back
                 </Button>
             </CardActions>
         </Card>
