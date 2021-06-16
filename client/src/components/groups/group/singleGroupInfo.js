@@ -15,7 +15,7 @@ import Input from '../../forms/auth/input'
 import { addFriendExpence, addMember } from '../../../actions/user/user'
 import { useDispatch } from 'react-redux'
 
-const SingleGroupInfo = ({ setShowSingle, groupInfo, user }) =>{
+const SingleGroupInfo = ({ setShowSingle, groupInfo, user, isDispatched, setIsDispatched}) =>{
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -32,14 +32,14 @@ const SingleGroupInfo = ({ setShowSingle, groupInfo, user }) =>{
 
     const handleAddMember = ()=>{
         const data = {groupId:groupId, userId:memberEmail, currentUser:user.result._id};
-        dispatch(addMember(data));
+        dispatch(addMember(data,isDispatched, setIsDispatched));    
     }
 
     const handleExpenceChange = (id)=>{
         console.log('chalo tum bhi kya yaad rakhogey......')
         const sendData = { paidby:user.result._id, recipent:id, amount:expence, groupId:groupId};
         setExpence(0);
-        dispatch(addFriendExpence(sendData));
+        dispatch(addFriendExpence(sendData,isDispatched, setIsDispatched));
     }
 
     return(

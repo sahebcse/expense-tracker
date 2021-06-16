@@ -9,7 +9,7 @@ import FileCopyIcon from '@material-ui/icons/FileCopy';
 import SingleGroupInfo from './singleGroupInfo'
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-const Friend = ({group,user}) =>{
+const Friend = ({group,user, isDispatched, setIsDispatched}) =>{
     const [showSingle, setShowSingle] = useState(false);
     const classes = useStyles();
     const groupInfo = { groupName:group.name, groupImage:group.groupImage, groupMember:group.members, groupExpences:group.totalExpences, groupId:group._id}
@@ -30,7 +30,7 @@ const Friend = ({group,user}) =>{
 
     if(showSingle){
         return (
-            <SingleGroupInfo setShowSingle={setShowSingle} groupInfo={groupInfo} user={user}/>
+            <SingleGroupInfo setShowSingle={setShowSingle} groupInfo={groupInfo} user={user} isDispatched={isDispatched} setIsDispatched={setIsDispatched}/>
         )
     }
 
@@ -42,6 +42,7 @@ const Friend = ({group,user}) =>{
             <CardMedia className={classes.media} image={group.groupImage || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} />
             <div className={classes.overlay}>
                 <Typography variant="h6">{group.groupType}</Typography>
+                <Typography variant="h6">Members : {group.members.length}</Typography>
             </div>
             
             <div className={classes.overlay2}>

@@ -109,7 +109,11 @@ router.post('/add_expense',protect,  async (req, res)=>
             if (result.balances[i].uid==req.body.recipent)
             {
                 console.log('This runs')
-                result.balances[i].balance=result.balances[i].balance+parseInt(req.body.amount)
+                if(req.body.clear===1){
+                    result.balances[i].balance=0;
+                }else{
+                    result.balances[i].balance=result.balances[i].balance+parseInt(req.body.amount)
+                }
                 result.save((err)=>
                 {
                     if (err)
@@ -133,7 +137,11 @@ router.post('/add_expense',protect,  async (req, res)=>
             {
                 console.log('This runs too')
                 console.log()
-                result.balances[i].balance=result.balances[i].balance-parseInt(req.body.amount)
+                if(req.body.clear===1){
+                    result.balances[i].balance=0;
+                }else{
+                    result.balances[i].balance=result.balances[i].balance-parseInt(req.body.amount)
+                }
                 result.save((err)=>
                 {
                     if (err)

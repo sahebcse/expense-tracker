@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { addMember } from '../../../actions/user/user'
 import useStyles from './styles'
 
-const AddGroup = ({user}) =>{
+const AddGroup = ({user,isDispatched, setIsDispatched}) =>{
     const [id,setId] = useState('');
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -14,7 +14,7 @@ const AddGroup = ({user}) =>{
         e.preventDefault();
         console.log('handle submit for addGroup.....')
         const data = {groupId:id, userId:user.result.email, currentUser:user.result._id};
-        dispatch(addMember(data));
+        dispatch(addMember(data,isDispatched, setIsDispatched));
     }
 
     const handleChange =(e)=>{

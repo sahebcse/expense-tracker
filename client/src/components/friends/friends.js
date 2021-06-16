@@ -4,7 +4,7 @@ import Friend from './friend/friend';
 import { useSelector } from 'react-redux';
 import useStyles from './styles'
 
-const Friends=({user})=>{
+const Friends=({user, isDispatched, setIsDispatched})=>{
     const balances = useSelector((state)=>state.balances)
     const classes = useStyles();
 
@@ -16,7 +16,7 @@ const Friends=({user})=>{
                 <Grid className={classes.container} alignItems="stretch" container spacing={3}>
                 {balances.map((balance)=>{
                     return (<Grid key={balance.uid._id} item xs={12} sm={6} md={6}>
-                        <Friend balance={balance} user={user}/>
+                        <Friend balance={balance} user={user} isDispatched={isDispatched} setIsDispatched={setIsDispatched}/>
                         </Grid> )
                     })}
                 </Grid>

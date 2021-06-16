@@ -71,6 +71,7 @@ router.post('/add_user_to_group',protect,  async (req, res)=>
         }
         else
         {
+            if(!group.members.includes(req.body.userId)){
             group.members.push(userId)
             group.save((err, result)=>
             {
@@ -78,7 +79,7 @@ router.post('/add_user_to_group',protect,  async (req, res)=>
                 {
                     console.log(err)
                 }
-            })
+            })}
         }
     })
 
