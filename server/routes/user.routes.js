@@ -70,7 +70,7 @@ router.post('/user/signIn', async (req, res)=>
         const match=await bcrypt.compare(password, user.password)
         if (!match) return res.status(404).json({message:"wrong username or password"});
 
-        await User.findById(user._id).populate('balances', 'firstName lastName selectedFile').populate('groups', 'name groupType totalExpences groupImage members').exec((err, result)=>
+        await User.findById(user._id).populate('balances', 'firstName lastName selectedFile').populate('groups', 'name groupType totalExpences groupImage members').exec(async (err, result)=>
         {
             if (err)
             {
@@ -80,7 +80,7 @@ router.post('/user/signIn', async (req, res)=>
             else
             {
                 
-                const token = result.getSignedToken();
+                const token = await result.getSignedToken();
                 return res.status(201).json({result:result, token});
             }
         })
