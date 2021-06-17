@@ -43,3 +43,9 @@ export const addMember = (data)=>axios.post(`${URL}/add_user_to_group`,data, {
         authorization: 'Bearer '+parsedToken
     }
 });
+
+export const deleteGroup = (data)=>axios.post(`${URL}/deleteGroup`,data, {
+    headers: {
+        authorization: 'Bearer '+parsedToken
+    }
+});

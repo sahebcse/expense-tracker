@@ -8,10 +8,13 @@ import InfoIcon from '@material-ui/icons/Info';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import SingleGroupInfo from './singleGroupInfo'
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useDispatch } from 'react-redux';
+import { deleteGroup } from '../../../actions/user/user'
 
 const Friend = ({group,user, isDispatched, setIsDispatched}) =>{
     const [showSingle, setShowSingle] = useState(false);
     const classes = useStyles();
+    const dispatch = useDispatch();
     const groupInfo = { groupName:group.name, groupImage:group.groupImage, groupMember:group.members, groupExpences:group.totalExpences, groupId:group._id}
 
 
@@ -28,9 +31,20 @@ const Friend = ({group,user, isDispatched, setIsDispatched}) =>{
         setShowSingle(true);
     }
 
+    const handleDelete=(e) => {
+        e.preventDefault();
+        dispatch(deleteGroup(group._id));
+    }
+
     if(showSingle){
         return (
-            <SingleGroupInfo setShowSingle={setShowSingle} groupInfo={groupInfo} user={user} isDispatched={isDispatched} setIsDispatched={setIsDispatched}/>
+            <SingleGroupInfo 
+            setShowSingle={setShowSingle} 
+            groupInfo={groupInfo} 
+            user={user} 
+            isDispatched={isDispatched} 
+            setIsDispatched={setIsDispatched}
+            />
         )
     }
 
@@ -64,7 +78,7 @@ const Friend = ({group,user, isDispatched, setIsDispatched}) =>{
                 <Button size="small" color="primary" >
                 <InfoIcon fontSize="small" /> More Info
                 </Button>
-                <Button size="small" color="secondary" >
+                <Button size="small" color="secondary" onClick={(e) =>handleDelete(e)}>
                 <DeleteIcon fontSize="small" /> Delete
                 </Button>
             </CardActions>

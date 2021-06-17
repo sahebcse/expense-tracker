@@ -54,3 +54,13 @@ export const addMember = (sendData,isDispatched, setIsDispatched) => async (disp
         console.log(error);
     }
 }
+
+export const deleteGroup = (id) => async (dispatch) => {
+    try {
+        const sendData = {groupId:id};
+        await api.deleteGroup(sendData);
+        dispatch({type:'DELETE_GROUP', payload:id});
+    } catch (error) {
+        console.log(error);
+    }
+}

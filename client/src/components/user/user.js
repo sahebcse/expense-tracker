@@ -16,7 +16,7 @@ const User = ({currentUser,setCurrentUser})=>{
     const user = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(()=>{
-        console.log(`use effect ${user.result._id}`)
+        console.log(`use effect ${user.result._id} ${user.token}`);
         dispatch(getBalances(user.result._id));
     },[isDispatched,dispatch])
 

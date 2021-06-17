@@ -133,6 +133,31 @@ router.post('/add_user_to_group',protect,  async (req, res)=>
 
 })
 
+router.post('/deleteGroup',protect,  async (req, res)=>
+{
+    console.log(`inside deleting group.....${req.body.groupId}`)
+    if (!mongoose.Types.ObjectId.isValid(req.body.groupId)) return res.status(404).send(`No post with id: ${id}`);
+    const group = await Group.findById(req.body.groupId);
+    const members = group.members;
+
+    console.log('removing group from members....');
+
+    for(let i=0;i<members.length;i++){
+        const user = await User.findById(members[i]);
+        user.groups = user.groups.filter((group) => group._id !== req.body.groupId);
+        await user.save();
+    }
+
+    console.log('removing group from database....');
+
+    await Group.findByIdAndRemove(req.body.groupId);
+
+    res.status(200).json({message:'Group deleted successfully'});
+
+
+
+})
+
 router.get('/group/:id',protect,  (req, res)=>{
     Group.findById(req.params.id).populate('members', 'first_name email').exec((err, result)=>
     {

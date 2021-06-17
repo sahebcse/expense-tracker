@@ -12,7 +12,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import AddIcon from '@material-ui/icons/Add';
 import Input from '../../forms/auth/input'
-import { addFriendExpence, addMember } from '../../../actions/user/user'
+import { addFriendExpence, addMember, deleteGroup } from '../../../actions/user/user'
 import { useDispatch } from 'react-redux'
 
 const SingleGroupInfo = ({ setShowSingle, groupInfo, user, isDispatched, setIsDispatched}) =>{
@@ -28,6 +28,11 @@ const SingleGroupInfo = ({ setShowSingle, groupInfo, user, isDispatched, setIsDi
     const handleChange = (e)=>{
         e.preventDefault();
         setMemberEmail(e.target.value);
+    }
+
+    const handleDelete=(e) => {
+        e.preventDefault();
+        dispatch(deleteGroup(groupId));
     }
 
     const handleAddMember = ()=>{
@@ -77,7 +82,7 @@ const SingleGroupInfo = ({ setShowSingle, groupInfo, user, isDispatched, setIsDi
                 <Button size="small" color="primary" onClick={handleAddMember} >
                 <AddCircleOutlineIcon fontSize="small" /> Add
                 </Button>
-                <Button size="small" color="secondary" >
+                <Button size="small" color="secondary" onClick={(e)=>handleDelete(e)}>
                 <DeleteIcon fontSize="small" /> Delete
                 </Button>
                 <Button size="small" color="primary" onClick={()=>setShowSingle(false)} >
