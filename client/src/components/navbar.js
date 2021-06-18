@@ -18,8 +18,15 @@ const Navbar = ()=>{
 
     return(
         <AppBar className={classes.appBar} display="flex" flexDirection="row" justifyContent="space-between" position="static">
-            <div display="flex" className={classes.brandContainer}>
-                <Typography variant="h2">SplitWise Clone</Typography>
+            <div  className={classes.brandContainer}>
+                <Button  className={classes.heading} spacing={3} onClick={() => history.push('/')}>ExT-Expense tracker app</Button>
+                {!user?.result && (
+                    <div className={classes.buttons}>
+                        <Button  className={classes.button} ><a className={classes.link} aria-current="page" href="/#header">Home</a></Button>
+                        <Button  className={classes.button} ><a className={classes.link} href="/#about">About</a></Button>
+                        <Button  className={classes.button} ><a className={classes.link} href="/#teambox">Team</a></Button>
+                    </div>
+                )}
             </div>
             <Toolbar className={classes.toolbar}>
                 {user?.result ? (
@@ -29,7 +36,7 @@ const Navbar = ()=>{
                         <Button variant="contained" className={classes.logout} color="secondary" onClick={logout}>Logout</Button>
                     </div>
                     ) : (
-                    <Button variant="contained" color="primary">Sign In</Button>
+                        <Button variant="contained" color="primary" spacing={3} onClick={()=>history.push('/auth')}>Sign In</Button>
                 )}
             </Toolbar>
         </AppBar>

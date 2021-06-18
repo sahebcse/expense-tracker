@@ -10,18 +10,20 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '10px 50px',
+    backgroundColor: "#0F8241"
   },
   heading: {
     color: 'rgba(0,183,255, 1)',
     textDecoration: 'none',
+    fontSize:"24px",
   },
   image: {
     marginLeft: '15px',
   },
   toolbar: {
     display: 'flex',
-    justifyContent: 'flex-end',
-    width: '400px',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
   profile: {
     display: 'flex',
@@ -34,10 +36,34 @@ export default makeStyles((theme) => ({
   },
   brandContainer: {
     display: 'flex',
-    alignItems: 'center',
   },
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
   },
+  buttons:{
+    display:'flex',
+    justifyContent: 'space-between',
+    padding:'4px',
+    margin:'3px',
+  },
+  button:{
+    margin:"2px",
+    backgroundColor:"inherit",
+  },
+  link:{
+    backgroundColor:"inherit",
+    fontSize:"16px",
+    color:"#fff",
+    textDecoration: 'none',
+  },
+  teamicons:{
+    display:'flex',
+    justifyContent: 'center',
+  },
+  teamiconssingle:{
+    margin:"5px",
+    color:"#000"
+  }
+  
 }));

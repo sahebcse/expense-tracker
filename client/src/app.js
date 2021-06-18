@@ -29,11 +29,11 @@ const App = ()=>{
                
                 <Switch>
                     <Container >
-                        <Route path='/' exact><Navigation />      
-       <Home/>
-       <About/>
-       <Team/> </Route>
-       <Navbar/>
+                        <Navbar/>
+                        <Route path='/' exact> 
+                        <Home/>
+                        <About/>
+                        <Team/> </Route>
                         <Route path='/auth' exact><Auth setCurrentUser={setCurrentUser}/></Route>
                         <Route path='/user' exact><User currentUser={currentUser} setCurrentUser={setCurrentUser}/></Route>
                         <Route path='/group/info' exact><SingleGroupInfo/></Route>

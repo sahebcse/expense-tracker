@@ -28,15 +28,5 @@ export default function Footer() {
         </div>
       </div>
     </header>
-        // <div className="row divwhole">
-        //      
-
-
-
-
-        //             <button type="button" className="btn btn-primary signupbtn ">SignUp Now !!</button>
-        //     </div>
-       
-        // </div>
     );
 }

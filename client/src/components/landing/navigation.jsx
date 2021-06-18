@@ -19,9 +19,6 @@ export default function Footer() {
             </li><li className="nav-item">
               <a className="nav-link" href="#teambox">Team</a>
             </li>
-            {/* <li className="nav-item">
-              <a className="nav-link" href="#">Contact</a>
-            </li> */}
           </ul>
           <a href="/auth" className="btn btn-info">Sign In</a> 
         </div>
