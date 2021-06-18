@@ -6,7 +6,7 @@ import Input from '../auth/input'
 import { useDispatch} from 'react-redux';
 import useStyles from './styles'
 
-const CreateGroup = ({user}) => {
+const CreateGroup = ({user,isDispatched, setIsDispatched}) => {
 
   const initialState = { name:'', groupType:'', totalExpences:0, groupImage:'', createdBy:user.result._id};
   const [form, setForm] = useState(initialState);
@@ -16,7 +16,7 @@ const CreateGroup = ({user}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createGroup(form));
+    dispatch(createGroup(form,isDispatched, setIsDispatched));
   };
 
   const handleFileRead = async (event) => {

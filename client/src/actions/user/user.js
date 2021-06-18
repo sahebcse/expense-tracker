@@ -25,28 +25,41 @@ export const addFriend =(currentUser,friend)=>async (dispatch)=>{
     }
 }
 
-export const createGroup =(form)=>async (dispatch)=>{
+export const createGroup =(form,isDispatched, setIsDispatched)=>async (dispatch)=>{
     try {
         const {data}=await api.createGroup(form);
         dispatch({type:'GET_GROUPS', payload:data.groups});
+        setIsDispatched(!isDispatched);
     } catch (error) {
         console.log(error);
     }
 }
 
-export const addFriendExpence = (sendData) => async (dispatch) => {
+export const addFriendExpence = (sendData, isDispatched, setIsDispatched) => async (dispatch) => {
     try {
         const { data } =  await api.addFriendExpence(sendData);
         dispatch({type:'GET_GROUPS',payload:data.groups});
+        setIsDispatched(!isDispatched)
     } catch (error) {
         console.log(error);
     }
 }
 
-export const addMember = (sendData) => async (dispatch) => {
+export const addMember = (sendData,isDispatched, setIsDispatched) => async (dispatch) => {
     try {
         const { data } = await api.addMember(sendData);
         dispatch({type:'GET_GROUPS', payload: data.groups});
+        setIsDispatched(!isDispatched);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const deleteGroup = (id) => async (dispatch) => {
+    try {
+        const sendData = {groupId:id};
+        await api.deleteGroup(sendData);
+        dispatch({type:'DELETE_GROUP', payload:id});
     } catch (error) {
         console.log(error);
     }

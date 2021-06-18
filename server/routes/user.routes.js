@@ -70,7 +70,7 @@ router.post('/user/signIn', async (req, res)=>
         const match=await bcrypt.compare(password, user.password)
         if (!match) return res.status(404).json({message:"wrong username or password"});
 
-        await User.findById(user._id).populate('balances', 'firstName lastName selectedFile').populate('groups', 'name groupType totalExpences groupImage members').exec((err, result)=>
+        await User.findById(user._id).populate('balances', 'firstName lastName selectedFile').populate('groups', 'name groupType totalExpences groupImage members').exec(async (err, result)=>
         {
             if (err)
             {
@@ -80,7 +80,7 @@ router.post('/user/signIn', async (req, res)=>
             else
             {
                 
-                const token = result.getSignedToken();
+                const token = await result.getSignedToken();
                 return res.status(201).json({result:result, token});
             }
         })
@@ -109,7 +109,11 @@ router.post('/add_expense',protect,  async (req, res)=>
             if (result.balances[i].uid==req.body.recipent)
             {
                 console.log('This runs')
-                result.balances[i].balance=result.balances[i].balance+parseInt(req.body.amount)
+                if(req.body.clear===1){
+                    result.balances[i].balance=0;
+                }else{
+                    result.balances[i].balance=result.balances[i].balance+parseInt(req.body.amount)
+                }
                 result.save((err)=>
                 {
                     if (err)
@@ -133,7 +137,11 @@ router.post('/add_expense',protect,  async (req, res)=>
             {
                 console.log('This runs too')
                 console.log()
-                result.balances[i].balance=result.balances[i].balance-parseInt(req.body.amount)
+                if(req.body.clear===1){
+                    result.balances[i].balance=0;
+                }else{
+                    result.balances[i].balance=result.balances[i].balance-parseInt(req.body.amount)
+                }
                 result.save((err)=>
                 {
                     if (err)

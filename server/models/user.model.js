@@ -26,12 +26,6 @@ userSchema.methods.getSignedToken = function() {
     });
 };
 
-
-const User = mongoose.model('User', userSchema)
-module.exports= User;
-
-
-
 userSchema.pre('create',async function(next){
     if(this.isModified('password')){
         this.password= await bcrypt.hash(this.password,12);
@@ -39,3 +33,8 @@ userSchema.pre('create',async function(next){
     }
     next();
 })
+
+const User = mongoose.model('User', userSchema)
+module.exports= User;
+
+

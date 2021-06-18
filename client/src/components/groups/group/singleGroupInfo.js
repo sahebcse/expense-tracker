@@ -12,10 +12,10 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import AddIcon from '@material-ui/icons/Add';
 import Input from '../../forms/auth/input'
-import { addFriendExpence, addMember } from '../../../actions/user/user'
+import { addFriendExpence, addMember, deleteGroup } from '../../../actions/user/user'
 import { useDispatch } from 'react-redux'
 
-const SingleGroupInfo = ({ setShowSingle, groupInfo, user }) =>{
+const SingleGroupInfo = ({ setShowSingle, groupInfo, user, isDispatched, setIsDispatched}) =>{
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -30,16 +30,21 @@ const SingleGroupInfo = ({ setShowSingle, groupInfo, user }) =>{
         setMemberEmail(e.target.value);
     }
 
+    const handleDelete=(e) => {
+        e.preventDefault();
+        dispatch(deleteGroup(groupId));
+    }
+
     const handleAddMember = ()=>{
         const data = {groupId:groupId, userId:memberEmail, currentUser:user.result._id};
-        dispatch(addMember(data));
+        dispatch(addMember(data,isDispatched, setIsDispatched));    
     }
 
     const handleExpenceChange = (id)=>{
         console.log('chalo tum bhi kya yaad rakhogey......')
         const sendData = { paidby:user.result._id, recipent:id, amount:expence, groupId:groupId};
         setExpence(0);
-        dispatch(addFriendExpence(sendData));
+        dispatch(addFriendExpence(sendData,isDispatched, setIsDispatched));
     }
 
     return(
@@ -77,7 +82,7 @@ const SingleGroupInfo = ({ setShowSingle, groupInfo, user }) =>{
                 <Button size="small" color="primary" onClick={handleAddMember} >
                 <AddCircleOutlineIcon fontSize="small" /> Add
                 </Button>
-                <Button size="small" color="secondary" >
+                <Button size="small" color="secondary" onClick={(e)=>handleDelete(e)}>
                 <DeleteIcon fontSize="small" /> Delete
                 </Button>
                 <Button size="small" color="primary" onClick={()=>setShowSingle(false)} >
