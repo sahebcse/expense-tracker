@@ -8,6 +8,11 @@ import Navbar from './components/navbar'
 import SingleGroupInfo from './components/groups/group/singleGroupInfo'
 import './index.css'
 
+import { Team } from './components/landing/Team'
+import  {About}  from './components/landing/about'
+import Navigation from './components/landing/navigation'; 
+import Home from './components/landing/home'
+
 const App = ()=>{
     const [currentUser, setCurrentUser] = useState(null);
     const history = useHistory();
@@ -21,10 +26,15 @@ const App = ()=>{
     return(
         <BrowserRouter>
             <Container maxWidth="lg">
-               <Navbar/>
+               
                 <Switch>
                     <Container >
-                        <Route path='/' exact><Auth setCurrentUser={setCurrentUser}/></Route>
+                        <Route path='/' exact><Navigation />      
+       <Home/>
+       <About/>
+       <Team/> </Route>
+       <Navbar/>
+                        <Route path='/auth' exact><Auth setCurrentUser={setCurrentUser}/></Route>
                         <Route path='/user' exact><User currentUser={currentUser} setCurrentUser={setCurrentUser}/></Route>
                         <Route path='/group/info' exact><SingleGroupInfo/></Route>
                     </Container>

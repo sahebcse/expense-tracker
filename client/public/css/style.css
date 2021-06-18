@@ -1,0 +1,161 @@
+/* nav part ..........................................................................*/
+.navbar{
+    margin-bottom: 80px;
+}
+
+
+
+/* home part ........................................................................................ */
+
+.txt{
+    color: brown;
+    
+    background: linear-gradient(to bottom, #7bc75550 0%, #023d1d79 100%);
+    text-align: center;
+    padding: auto;
+    justify-content: center;
+    align-content: center; 
+   
+  vertical-align: middle;
+   
+    
+}
+.App-header {
+    /* background-color: #282c34; */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+ .txt a{
+    margin: 40px;
+}
+.txt h1,h3{
+    margin: 30px;
+    /* margin-top: 20px; */
+
+}
+.divwhole{
+     
+    margin-top: 9px;
+    justify-content: center; 
+}
+
+.fill {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+.fill img {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
+}
+
+/* team part -------------------------------------------------------------------------------------- */
+
+.section-title {
+	margin-bottom: 70px;
+    justify-content: center;
+     /* background: rgb(2, 119, 90); */ 
+}
+.section-title h2 {
+	position: relative;
+	margin-top: 10px;
+	margin-bottom: 15px;
+	padding-bottom: 15px;
+    
+}
+.section-title h2::after {
+	 position:absolute  ;
+	content: "";
+	background: linear-gradient(to right, #5ca9fb 0%, #6372ff 100%);
+	height: 4px;
+	width: 200px;
+	bottom: 0;
+	margin-left: -100px;
+	left: 50%;
+}
+.section-title p {
+	font-size: 18px; 
+}
+.teamj{
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+/*     
+    background: linear-gradient(to bottom, #77ff72 0%, #07631e 100%); */
+    margin-top: 30px;
+}
+ 
+.team h4{
+    /* border-bottom: 4px double; */
+    color: rgb(142, 13, 228);
+    text-transform: capitalize;
+    border-bottom:5px solid gold ;
+    border-radius: 8px;
+     
+     
+    
+     
+     
+}
+.team{
+    text-align: center;  
+    margin-bottom: 10px;
+    padding-left: 45px;
+    padding-right: 45px;
+     
+}
+
+/* About------------------------------------------------------------------------------------------------ */
+ #about{ 
+    /* background: linear-gradient(to top, #a8f873 0%, #057537 100%); */
+    padding: 30px;
+    margin: auto;
+    margin-top: 30px;
+     
+ }
+
+.card{
+    width: 18rem;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.card-body{
+    background: linear-gradient(to bottom, #a8f8731f 0%, #05753748 100%);
+}
+.card-body a{
+    background: linear-gradient(to bottom, #2d6b03 0%, #97e62f 100%);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
